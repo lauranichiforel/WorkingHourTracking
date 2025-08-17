@@ -1,0 +1,81 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HourTracking"
+             x:Class="HourTracking.ZileListPage"
+             Title="Lista Zile Lucrate">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DaNuConverter x:Key="DaNuConverter" />
+            <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10" >
+
+        <!-- Bani neîncasati -->
+        <Label x:Name="baniNeincasatiLabel" 
+               Grid.Row="0"
+               FontAttributes="Bold" 
+               FontSize="Medium" 
+               TextColor="#2a9d8f"
+               Margin="0,0,0,10" />
+
+        <!-- Lista zilelor grupate -->
+        <CollectionView x:Name="zileList"
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        SelectionChanged="OnZiSelected"
+                        ItemsSource="{Binding GrupuriZile}"
+                        IsGrouped="True"
+                        VerticalScrollBarVisibility="Always"
+                        Margin="0,0,0,10">
+
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#e9ecef" Padding="5" Margin="0,5,0,0" HasShadow="False" BorderColor="#adb5bd" CornerRadius="5">
+                        <Label Text="{Binding Key}" FontAttributes="Bold" FontSize="Medium" TextColor="#495057" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="LightGray" StrokeThickness="1" Padding="10" Margin="5" StrokeShape="RoundRectangle 10">
+                        <Grid ColumnDefinitions="*,Auto,Auto" VerticalOptions="Center">
+
+                            <!-- Info zi -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label Text="{Binding Data, StringFormat='Data: {0:dd/MM/yyyy}'}" FontAttributes="Bold"/>
+                                <Label Text="{Binding OreLucrate, StringFormat='Ore: {0}'}" />
+                                <Label Text="{Binding Comentariu}" FontAttributes="Italic" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Platit, Converter={StaticResource DaNuConverter}, StringFormat='Plătit: {0}'}" TextColor="#264653" />
+                            </VerticalStackLayout>
+
+                            <!-- Buton Șterge -->
+                            <Button Grid.Column="1" Text="Șterge" TextColor="White" BackgroundColor="#d9534f"
+                                    Clicked="OnDeleteClicked"
+                                    HorizontalOptions="End" VerticalOptions="Center"
+                                    Padding="10,5" Margin="10,0" />
+
+                            <!-- Buton Plătit -->
+                            <Button Grid.Column="2" Text="Plătit" TextColor="White" BackgroundColor="#28a745"
+                                    Clicked="OnPlatesteClicked"
+                                    HorizontalOptions="End" VerticalOptions="Center"
+                                    Padding="10,5"
+                                    IsVisible="{Binding Platit, Converter={StaticResource InverseBooleanConverter}}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Buton Adaugă fix jos -->
+        <Button Grid.Row="2" Text="Adaugă Zi Nouă" Clicked="OnAddZiClicked" 
+                BackgroundColor="#264653" TextColor="White" 
+                FontAttributes="Bold" Padding="15"
+                HorizontalOptions="FillAndExpand" />
+
+    </Grid>
+
+</ContentPage>

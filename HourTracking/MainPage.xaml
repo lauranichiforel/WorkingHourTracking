@@ -1,0 +1,40 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HourTracking.MainPage"
+             Title="Pontaj Zilnic">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Selectează data:" />
+        <DatePicker x:Name="datePicker" />
+
+        <Label Text="Ore lucrate:" />
+        <Entry x:Name="oreEntry" Keyboard="Numeric" Placeholder="Ex: 8" />
+
+        <Label Text="Comentariu (opțional):" />
+        <Editor x:Name="comentariuEditor" AutoSize="TextChanges" HeightRequest="80" />
+
+        <HorizontalStackLayout>
+            <Label Text="Plătit?" VerticalOptions="Center" />
+            <Switch x:Name="platitSwitch" />
+        </HorizontalStackLayout>
+
+        <Button Text="Salvează ziua" Clicked="OnSalveazaClicked" />
+
+        <Label x:Name="labelBani" FontAttributes="Bold" TextColor="DarkRed" FontSize="18" />
+
+        <CollectionView x:Name="zileList" SelectionMode="Single" SelectionChanged="OnZiSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="LightGray" StrokeThickness="1" Padding="10" Margin="5" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Data, StringFormat='Data: {0:dd/MM/yyyy}'}" />
+                            <Label Text="{Binding OreLucrate, StringFormat='Ore: {0}'}" />
+                            <Label Text="{Binding Comentariu}" FontAttributes="Italic" />
+                            <Label Text="{Binding Platit, StringFormat='Plătit: {0}'}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,26 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HourTracking.EditZiPage"
+             Title="Editează Zi Lucrată">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Label Text="Selectează data:" />
+        <DatePicker x:Name="datePicker" />
+
+        <Label Text="Ore lucrate:" />
+        <Entry x:Name="oreEntry" Keyboard="Numeric" Placeholder="Ex: 8" />
+
+        <Label Text="Comentariu (opțional):" />
+        <Editor x:Name="comentariuEditor" AutoSize="TextChanges" HeightRequest="80" />
+
+        <HorizontalStackLayout>
+            <Label Text="Plătit?" VerticalOptions="Center" />
+            <Switch x:Name="platitSwitch" />
+        </HorizontalStackLayout>
+
+        <Button Text="Salvează" Clicked="OnSalveazaClicked" />
+
+    </VerticalStackLayout>
+
+</ContentPage>
